@@ -1,0 +1,254 @@
+# =============================================================================
+# manifest.toml — fuente única de verdad del stack y los dotfiles rastreados
+# -----------------------------------------------------------------------------
+# Los scripts (inventory/lift/install/status) SON genéricos: todo el
+# conocimiento vive acá. Para agregar un tool o un archivo, editá este archivo,
+# no los scripts.
+#
+# Convenciones:
+#   - "home": path RELATIVO a $HOME donde vive el archivo en la máquina real.
+#   - "repo": path RELATIVO a hosts/<equipo>/ donde se versiona en el repo.
+#   - Si un entry no tiene "os", aplica a macos+linux+windows por igual.
+#   - "bin": cómo se detecta el tool en el PATH (command -v / Get-Command).
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Equipos: mapeo hostname->carpeta. Patrones glob (*) permitidos.
+# -----------------------------------------------------------------------------
+[hosts.macbook-air]
+match = ["MacBook-Air-de-Sebastian"]
+
+[hosts.windows-desktop]
+match = ["DESKTOP-*"]
+
+[hosts.wsl-ubuntu]
+match = ["*ubuntu*", "*wsl*"]
+
+# -----------------------------------------------------------------------------
+# Stack de dev: detección + versión + comandos de instalación por OS.
+# "check" sobreescribe la detección por bin (para plugins o archivos).
+# -----------------------------------------------------------------------------
+[[tools]]
+id = "wezterm"
+name = "WezTerm"
+bin = "wezterm"
+version_cmd = "wezterm --version"
+install = { macos = "brew install --cask wezterm", windows = "winget install --id WezTerm.WezTerm" }
+
+[[tools]]
+id = "ghostty"
+name = "Ghostty"
+bin = "ghostty"
+version_cmd = "ghostty --version"
+install = { macos = "brew install --cask ghostty", windows = "winget install --id mitchellh.ghostty" }
+
+[[tools]]
+id = "starship"
+name = "Starship"
+bin = "starship"
+version_cmd = "starship --version | head -n1"
+install = { macos = "brew install starship", windows = "winget install --id Starship.Starship", linux = "curl -sS https://starship.rs/install.sh | sh" }
+
+[[tools]]
+id = "fzf"
+name = "fzf"
+bin = "fzf"
+version_cmd = "fzf --version"
+install = { macos = "brew install fzf", windows = "winget install --id junegunn.fzf", linux = "sudo apt install -y fzf" }
+
+[[tools]]
+id = "psfzf"
+name = "PSFzf (módulo PowerShell)"
+os = ["windows"]
+check = "powershell -NoProfile -Command 'Get-Module -ListAvailable PSFzf | Out-Null'"
+install = { windows = "Install-Module -Name PSFzf -Force -Scope CurrentUser" }
+
+[[tools]]
+id = "zoxide"
+name = "zoxide"
+bin = "zoxide"
+version_cmd = "zoxide --version"
+install = { macos = "brew install zoxide", windows = "winget install --id ajeetdsouza.zoxide", linux = "sudo apt install -y zoxide" }
+
+[[tools]]
+id = "zsh"
+name = "Zsh"
+bin = "zsh"
+version_cmd = "zsh --version"
+os = ["macos", "linux"]
+
+[[tools]]
+id = "fish"
+name = "Fish shell"
+bin = "fish"
+version_cmd = "fish --version"
+install = { macos = "brew install fish", linux = "sudo apt install -y fish" }
+
+[[tools]]
+id = "tmux"
+name = "tmux"
+bin = "tmux"
+version_cmd = "tmux -V"
+install = { macos = "brew install tmux", linux = "sudo apt install -y tmux" }
+
+[[tools]]
+id = "oh-my-zsh"
+name = "Oh My Zsh"
+check = "test -d \"$HOME/.oh-my-zsh\""
+os = ["macos", "linux"]
+
+[[tools]]
+id = "zsh-autosuggestions"
+name = "zsh-autosuggestions"
+check = "test -d \"$HOME/.zsh/zsh-autosuggestions\" -o -e \"$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions\""
+os = ["macos", "linux"]
+install = { macos = "brew install zsh-autosuggestions", linux = "git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.zsh/zsh-autosuggestions" }
+
+[[tools]]
+id = "zsh-syntax-highlighting"
+name = "zsh-syntax-highlighting"
+check = "test -d \"$HOME/.zsh/zsh-syntax-highlighting\" -o -e \"$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting\""
+os = ["macos", "linux"]
+install = { macos = "brew install zsh-syntax-highlighting", linux = "git clone https://github.com/zsh-users/zsh-syntax-highlighting $HOME/.zsh/zsh-syntax-highlighting" }
+
+[[tools]]
+id = "conda"
+name = "Miniconda / Conda"
+bin = "conda"
+version_cmd = "conda --version"
+install = { macos = "brew install --cask miniconda", windows = "winget install --id Anaconda.Miniconda3", linux = "curl -fsSL https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -o /tmp/miniconda.sh && bash /tmp/miniconda.sh" }
+
+[[tools]]
+id = "mamba"
+name = "Mamba"
+bin = "mamba"
+version_cmd = "mamba --version"
+
+[[tools]]
+id = "micromamba"
+name = "Micromamba"
+bin = "micromamba"
+version_cmd = "micromamba --version"
+
+[[tools]]
+id = "pwsh"
+name = "PowerShell 7"
+bin = "pwsh"
+version_cmd = "pwsh --version"
+install = { macos = "brew install --cask powershell", windows = "winget install --id Microsoft.PowerShell", linux = "curl -fsSL https://aka.ms/install-powershell.sh | bash" }
+
+[[tools]]
+id = "powershell"
+name = "Windows PowerShell 5.1"
+bin = "powershell.exe"
+os = ["windows"]
+
+[[tools]]
+id = "git"
+name = "Git"
+bin = "git"
+version_cmd = "git --version"
+install = { windows = "winget install --id Git.Git" }
+
+[[tools]]
+id = "wsl"
+name = "WSL"
+bin = "wsl.exe"
+os = ["windows"]
+install = { windows = "winget install --id Microsoft.WSL" }
+
+[[tools]]
+id = "antigravity"
+name = "Antigravity CLI"
+bin = "antigravity"
+version_cmd = "antigravity --version"
+
+[[tools]]
+id = "proot-distro"
+name = "proot-distro (Termux)"
+bin = "proot-distro"
+version_cmd = "proot-distro --version"
+os = ["linux"]
+
+[[tools]]
+id = "font-jetbrains-mono"
+name = "JetBrains Mono Nerd Font"
+check = "fc-list 2>/dev/null | grep -qi 'jetbrains.*mono' || ls \"$HOME/Library/Fonts\" 2>/dev/null | grep -qi 'jetbrainsmono.*nerd'"
+install = { macos = "brew install --cask font-jetbrains-mono-nerd-font", linux = "sudo apt install -y fonts-jetbrainsmono-nerd-font" }
+
+[[tools]]
+id = "font-symbols"
+name = "Symbols Nerd Font"
+check = "fc-list 2>/dev/null | grep -qi 'symbols.*nerd' || ls \"$HOME/Library/Fonts\" 2>/dev/null | grep -qi 'symbols.*nerd'"
+install = { macos = "brew install --cask font-symbols-only-nerd-font", linux = "sudo apt install -y fonts-symbola" }
+
+[[tools]]
+id = "font-old-timey"
+name = "Old Timey Mono"
+check = "fc-list 2>/dev/null | grep -qi 'old.*timey.*mono' || ls \"$HOME/Library/Fonts\" 2>/dev/null | grep -qi 'old.*timey'"
+install = { macos = "brew install --cask old-timey-mono-nerd-font" }
+
+# -----------------------------------------------------------------------------
+# Archivos rastreados: los dotfiles del stack.
+# -----------------------------------------------------------------------------
+[[files]]
+id = "wezterm"
+name = "WezTerm config"
+repo = ".wezterm.lua"
+home = [".wezterm.lua"]
+
+[[files]]
+id = "ghostty"
+name = "Ghostty config"
+repo = ".config/ghostty/config"
+home = [".config/ghostty/config"]
+
+[[files]]
+id = "starship"
+name = "Starship config"
+repo = ".config/starship.toml"
+home = [".config/starship.toml"]
+
+[[files]]
+id = "zshrc"
+name = "Zsh rc"
+repo = ".zshrc"
+home = [".zshrc"]
+
+[[files]]
+id = "bashrc"
+name = "Bash rc"
+repo = ".bashrc"
+home = [".bashrc"]
+
+[[files]]
+id = "fish-config"
+name = "Fish config"
+repo = ".config/fish/config.fish"
+home = [".config/fish/config.fish"]
+
+[[files]]
+id = "tmux"
+name = "tmux config"
+repo = ".tmux.conf"
+home = [".tmux.conf"]
+
+[[files]]
+id = "hushlogin"
+name = "Hushlogin"
+repo = ".hushlogin"
+home = [".hushlogin"]
+
+[[files]]
+id = "powershell7-profile"
+name = "PowerShell 7 profile"
+os = ["windows"]
+repo = "PowerShell/Microsoft.PowerShell_profile.ps1"
+home = ["Documents/PowerShell/Microsoft.PowerShell_profile.ps1"]
+
+[[files]]
+id = "powershell5-profile"
+name = "Windows PowerShell profile"
+os = ["windows"]
+repo = "WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
+home = ["Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"]

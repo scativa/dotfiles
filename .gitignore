@@ -1,0 +1,18 @@
+# Secrets: lift nunca toca esto, y aunque lo intente, git lo ignora.
+secrets/
+.ssh/
+.aws/
+*.key
+*.pem
+id_rsa
+id_ed25519
+.env
+.env.*
+*.token
+*.cookie
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

@@ -1,0 +1,29 @@
+# Fuente e iconos Nerd Font
+font-family = "JetBrainsMono Nerd Font"
+font-size = 14
+
+# TMUX
+# command = zsh -l -c "tmux attach-session -t default || tmux new-session -s default"
+
+# Tema y Apariencia
+theme = Catppuccin Mocha
+background-opacity = 0.95
+window-padding-x = 10
+window-padding-y = 10
+
+# Comportamiento
+confirm-close-surface = false
+macos-option-as-alt = true
+
+window-decoration = true
+macos-titlebar-style = native
+
+# Atajos de teclado para Splits (Divisiones) y Pestañas
+keybind = super+d=new_split:right
+keybind = super+shift+d=new_split:down
+keybind = super+t=new_tab
+keybind = super+w=close_surface
+keybind = alt+left=goto_split:left
+keybind = alt+right=goto_split:right
+keybind = alt+up=goto_split:top
+keybind = alt+down=goto_split:bottom
