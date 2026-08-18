@@ -7,6 +7,8 @@
 #
 # Convenciones:
 #   - "home": path RELATIVO a $HOME donde vive el archivo en la máquina real.
+#             Puede ser ABSOLUTO (ej. "E:/Users/...") para carpetas redirigidas
+#             como Documents en otro disco; los scripts lo detectan por prefijo.
 #   - "repo": path RELATIVO a hosts/<equipo>/ donde se versiona en el repo.
 #   - Si un entry no tiene "os", aplica a macos+linux+windows por igual.
 #   - "bin": cómo se detecta el tool en el PATH (command -v / Get-Command).
@@ -18,7 +20,7 @@
 [hosts.macbook-air]
 match = ["MacBook-Air-de-Sebastian"]
 
-[hosts.windows-desktop]
+[hosts.win10-Z240]
 match = ["DESKTOP-*"]
 
 [hosts.wsl-ubuntu]
@@ -244,11 +246,13 @@ id = "powershell7-profile"
 name = "PowerShell 7 profile"
 os = ["windows"]
 repo = "PowerShell/Microsoft.PowerShell_profile.ps1"
-home = ["Documents/PowerShell/Microsoft.PowerShell_profile.ps1"]
+# Documents redirigido a E:\ en este equipo → home absoluto (scripts lo soportan)
+home = ["E:/Users/Seba/Documents/PowerShell/Microsoft.PowerShell_profile.ps1"]
 
 [[files]]
 id = "powershell5-profile"
 name = "Windows PowerShell profile"
 os = ["windows"]
 repo = "WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
-home = ["Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"]
+# Documents redirigido a E:\ en este equipo → home absoluto (scripts lo soportan)
+home = ["E:/Users/Seba/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"]

@@ -4,7 +4,13 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES="$(cd "$SCRIPT_DIR/.." && pwd)"
-PY="$(command -v python3 || command -v python || true)"
+# Prefer a real, runnable interpreter: on Windows, "python3" may be a
+# Microsoft Store alias stub that prints an error and exits non-zero.
+PY=""
+for _c in python python3; do
+  _py="$(command -v "$_c" 2>/dev/null || true)"
+  [ -n "$_py" ] && "$_py" -V >/dev/null 2>&1 && PY="$_py" && break
+done
 [ -n "$PY" ] || { echo "ERROR: python3 required" >&2; exit 1; }
 
 YES=0
@@ -13,7 +19,8 @@ HOST="$("$PY" "$SCRIPT_DIR/manifest.py" host)"
 
 "$SCRIPT_DIR/lift.sh"
 
-if git -C "$DOTFILES" diff --quiet -- "hosts/$HOST/" && git -C "$DOTFILES" diff --cached --quiet -- "hosts/$HOST/"; then
+# "diff --quiet" misses untracked files (first sync of a host) — use porcelain.
+if [ -z "$(git -C "$DOTFILES" status --porcelain -- "hosts/$HOST/")" ]; then
   echo
   echo "SYNC: nothing changed for '$HOST' — nothing to commit."
   exit 0

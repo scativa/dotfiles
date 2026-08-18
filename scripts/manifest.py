@@ -171,6 +171,10 @@ def first_home(entry, osname):
 
 
 def main():
+    # Windows pipes translate "\n" to "\r\n"; bash "read" would keep the "\r"
+    # and break every path. Emit pure "\n" so TSV parsing works on all OSes.
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(newline="\n")
     data = load()
     if not data:
         sys.exit("manifest.toml vacío o inválido")

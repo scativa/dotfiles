@@ -5,7 +5,13 @@
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES="$(cd "$SCRIPT_DIR/.." && pwd)"
-PY="$(command -v python3 || command -v python || true)"
+# Prefer a real, runnable interpreter: on Windows, "python3" may be a
+# Microsoft Store alias stub that prints an error and exits non-zero.
+PY=""
+for _c in python python3; do
+  _py="$(command -v "$_c" 2>/dev/null || true)"
+  [ -n "$_py" ] && "$_py" -V >/dev/null 2>&1 && PY="$_py" && break
+done
 [ -n "$PY" ] || { echo "ERROR: python3 required" >&2; exit 1; }
 
 OS="$("$PY" "$SCRIPT_DIR/manifest.py" os)"
