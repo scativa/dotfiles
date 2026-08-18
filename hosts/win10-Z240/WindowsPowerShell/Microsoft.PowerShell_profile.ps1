@@ -24,9 +24,9 @@ function clist { conda env list }
 function gs { git status }
 function ga { git add . }
 function gc ($msg) { git commit -m "$msg" }
-function gco ($branch) { git checkout $branch }
-function gcn ($branch) { git checkout -b $branch }
+function gw ($branch) { git checkout $branch }
+function gn ($branch) { git checkout -b $branch }
 function gp { git push }
-function gld { git log --oneline --graph --decorate -n 10 }
 function gl { git log --oneline --graph --decorate -n 10 }
+function gld ($count) { git log --oneline --graph --decorate -n $count }
 

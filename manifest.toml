@@ -94,6 +94,13 @@ version_cmd = "tmux -V"
 install = { macos = "brew install tmux", linux = "sudo apt install -y tmux" }
 
 [[tools]]
+id = "psmux"
+name = "PSMux (tmux para Windows)"
+bin = "psmux"
+version_cmd = "psmux --version | head -n1"
+install = { windows = "winget install --id marlocarlo.psmux" }
+
+[[tools]]
 id = "oh-my-zsh"
 name = "Oh My Zsh"
 check = "test -d \"$HOME/.oh-my-zsh\""
@@ -234,6 +241,12 @@ id = "tmux"
 name = "tmux config"
 repo = ".tmux.conf"
 home = [".tmux.conf"]
+
+[[files]]
+id = "psmux"
+name = "PSMux config"
+repo = ".psmux.conf"
+home = [".psmux.conf"]
 
 [[files]]
 id = "hushlogin"
