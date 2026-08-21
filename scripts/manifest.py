@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
-"""Manifest reader for the dotfiles repo — zero dependencies.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Manifest reader for the dotfiles repo - zero dependencies.
 
 Parses manifest.toml with a minimal embedded TOML parser (works on Python 3.9,
 no tomllib) and exposes TSV-views for the bash scripts.
