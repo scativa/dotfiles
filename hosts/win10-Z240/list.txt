@@ -1,0 +1,5 @@
+fzf (brew install fzf) $(brew --prefix)/opt/fzf/install
+
+wezterm
+
+este es mi profile de win 10, ver la configuración de fzf
