@@ -269,3 +269,9 @@ os = ["windows"]
 repo = "WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
 # Documents redirigido a E:\ en este equipo → home absoluto (scripts lo soportan)
 home = ["E:/Users/Seba/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"]
+
+[[files]]
+id = "gitconfig"
+name = "Git global config"
+repo = ".gitconfig"
+home = [".gitconfig"]

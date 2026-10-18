@@ -1,0 +1,5 @@
+[user]
+	name = Seba M4
+	email = scativa@gmail.com
+[alias]
+	lg = log --graph --pretty=format:'%C(white)(%cd)%C(reset) %C(auto)%h%d %s' --date=short
