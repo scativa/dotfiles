@@ -1,0 +1,53 @@
+# Define el orden visual del prompt
+format = """
+$time\
+$conda\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+$directory\
+$character"""
+
+#$line_break\
+
+# Configuración del directorio
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = false
+
+# Configuración del entorno Conda (se activa al revivir o activar un env)
+[conda]
+# format = " via [$symbol$environment]($style) "
+format = "[\\[$environment\\]]($style) "
+symbol = "🐍 "
+style = "bold green"
+ignore_base = false # Ponlo en 'true' si querés ocultar el entorno 'base'
+
+# Configuración de Git
+[git_branch]
+format = "[\\[$symbol$branch\\]]($style) "
+symbol = " "
+style = "bold purple"
+
+[git_status]
+format = "[\\[$all_status$ahead_behind\\]]($style) "
+style = "bold red"
+
+# Carácter final para escribir comandos
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[cmd_duration]
+min_time = 2_000 # Muestra el tiempo solo si tardó más de 2 segundos (en milisegundos)
+format = "took [$duration]($style) "
+style = "yellow"
+
+# Configuración de la hora
+[time]
+disabled = false
+format = "[\\[$time\\]]($style) "
+time_format = "%H:%M:%S" # Formato de 24 hs (ej. 14:30:05). Usa "%I:%M:%S %p" si prefieres 12 hs (AM/PM).
+style = "bold yellow"
